@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Table from './components/Table';
-import './App.css';
 import axios from 'axios';
+import './App.css';
 
 class App extends Component {
 
