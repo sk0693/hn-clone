@@ -3,14 +3,7 @@ import React, { Component } from 'react'
 class Table extends Component {
     constructor(props) {
         super(props)
-        this.state = { //state is by default an object
-            students: [
-                { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
-                { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
-                { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
-                { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' }
-            ]
-        }
+        console.log('this.props.news', this.props.news );
     }
 
     renderTableHeader() {
@@ -21,14 +14,14 @@ class Table extends Component {
     }
 
     renderTableData() {
-        return this.state.students.map((student, index) => {
-            const { id, name, age, email } = student //destructuring
+        return this.props.news.map((news, index) => {
+            const { objectID, num_comments, points, title } = news //destructuring
             return (
-                <tr key={id}>
-                    <td>{id}</td>
-                    <td>{name}</td>
-                    <td>{age}</td>
-                    <td>{email}</td>
+                <tr key={objectID}>
+                    <td>{num_comments}</td>
+                    <td>{points}</td>
+                    <td></td>
+                    <td>{title}</td>
                 </tr>
             )
         })
@@ -37,10 +30,15 @@ class Table extends Component {
     render() {
         return (
             <div>
-                <h1 id='title'>React Dynamic Table</h1>
+                <h1 id='title'>Hacker News Clone</h1>
                 <table id='students'>
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
+                        <tr>
+                            <td>Comments</td>
+                            <td>Votes Counts</td>
+                            <td>UpVotes</td>
+                            <td>News Details</td>
+                        </tr>
                         {this.renderTableData()}
                     </tbody>
                 </table>
