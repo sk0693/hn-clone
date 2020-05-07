@@ -129,3 +129,7 @@
     pointer-events: none;
     text-decoration: none;
 }
+
+.hidden {
+    background-color: #8e89d9 !important;
+}

@@ -25,17 +25,19 @@ class App extends Component {
   performUpdationOnStateAfterGettingData = async ({ result = {}, error }) => {
     let news = result.hits || [];
     let upVotes = await hackerNewsApi.getDataFromStorageServices('upVotes')
+    const hidden = await hackerNewsApi.getDataFromStorageServices('hidden');
     if (upVotes) {
-      news.forEach(element => {
-        let votes = upVotes[element['objectID']];
+      news.forEach(ele => {
+        let votes = upVotes[ele['objectID']];
         if (votes) {
-          element['points'] = element['points'] + votes;
-          element['voted'] = true;
+          ele['points'] = ele['points'] + votes;
+          ele['voted'] = true;
         }
+        ele['isHidden'] = hidden[ele['objectID']] || false;
       });
     }
 
-    const bookmark = await hackerNewsApi.getDataFromStorageServices('bookmark')
+    const bookmark = await hackerNewsApi.getDataFromStorageServices('bookmark');
 
     this.setState((state) => ({
       hits: result.hits || state.hits,
@@ -90,6 +92,25 @@ class App extends Component {
     this.setState((state) => ({ page: state.page - 1 }), () => this.getPageWiseData())
   }
 
+  onHideButtonHandler = async (e, objectID, isHide) => {
+    e.preventDefault();
+    let hidden = await hackerNewsApi.getDataFromStorageServices('hidden')
+    if (!hidden) {
+      hidden = {};
+    }
+    hidden[objectID] = isHide;
+    await hackerNewsApi.setDataToStorageService('hidden', hidden);
+    let { hits } = this.state;
+    let index = hits.findIndex(element => {
+      return element.objectID === objectID;
+    });
+
+    if (index > -1) {
+      hits[index]['isHidden'] = isHide;
+      this.setState({ hits: hits });
+    }
+  }
+
   onBookMarkButtonHandler = async (isBookmark) => {
     const { page } = this.state
     this.setState({
@@ -113,7 +134,8 @@ class App extends Component {
             nextButton={this.onNextButtonHandler}
             previousButton={this.onPreviousButtonHandler}
             upVoteButton={this.onUpVoteClickHandler}
-            bookMarkButton={this.onBookMarkButtonHandler} />
+            bookMarkButton={this.onBookMarkButtonHandler} 
+            onHideButton={this.onHideButtonHandler}/>
 
           <Chart payload={this.state} />
         </div>

@@ -42,22 +42,22 @@ const Table = (props) => {
             )
         }
         return payload.hits.map((news, index) => {
-            const { objectID, num_comments, points, title, url, author, created_at, voted = false } = news;
+            const { objectID, num_comments, points, title, url, author, created_at, voted = false, isHidden = false } = news;
             return (
-                <tr key={objectID}>
+                <tr key={objectID} className={isHidden ? 'hidden' : ''}>
                     <td>{num_comments}</td>
                     <td className={(voted ? 'voted' : '')}>
                         {points}
                     </td>
                     <td>
-                        <a href={'/#'}>
+                        <a href={'/#'} className={(isHidden ? 'isDisabled': '')}>
                             <BsTriangleFill
                                 className={"triangle"}
                                 onClick={(e) => props.upVoteButton(e, objectID)}
                             />
                         </a>
                     </td>
-                    <td className="news-detail">
+                    <td className={"news-detail"}>
                         <span className="title">
                             {title}
                         </span>
@@ -72,7 +72,7 @@ const Table = (props) => {
                         <span className="site">
                             {calcDate(new Date(created_at))} ago
                         </span>
-                        <span className="hide">hide</span>
+                        <span className="hide" onClick={(e) => props.onHideButton(e, objectID, !isHidden)}>{isHidden ? 'show' : 'hide'}</span>
                     </td>
                 </tr>
             )
@@ -94,9 +94,9 @@ const Table = (props) => {
                                 {props.payload.page + 1}
                                 {props.payload.isBookmarked
                                     ?
-                                    <FaBookmark className="bookmark" onClick={() =>props.bookMarkButton(false)}/>
+                                    <FaBookmark className="bookmark" onClick={() => props.bookMarkButton(false)} />
                                     :
-                                    <FaRegBookmark className="bookmark" onClick={() =>props.bookMarkButton(true)} />
+                                    <FaRegBookmark className="bookmark" onClick={() => props.bookMarkButton(true)} />
                                 }
                             </span>
                         </th>
