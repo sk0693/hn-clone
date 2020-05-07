@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Table from './components/Table';
-import axios from 'axios';
 import './App.css';
 import Chart from './components/Chart';
+import hackerNewsApi from './services/hackerNewsService';
 
 class App extends Component {
 
@@ -22,9 +22,9 @@ class App extends Component {
     this.getPageWiseData();
   }
 
-  performUpdationOnStateAfterGettingData({ result = {}, error }) {
-    let news = result.data.hits || [];
-    let upVotes = JSON.parse(localStorage.getItem('upVotes'));
+  performUpdationOnStateAfterGettingData = async ({ result = {}, error }) => {
+    let news = result.hits || [];
+    let upVotes = await hackerNewsApi.getDataFromStorageServices('upVotes')
     if (upVotes) {
       news.forEach(element => {
         let votes = upVotes[element['objectID']];
@@ -35,14 +35,13 @@ class App extends Component {
       });
     }
 
-    let bookmark = JSON.parse(localStorage.getItem('bookmark'));
-
+    const bookmark = await hackerNewsApi.getDataFromStorageServices('bookmark')
 
     this.setState((state) => ({
-      hits: result.data.hits || state.hits,
+      hits: result.hits || state.hits,
       error,
       loading: false,
-      totalPages: result.data.nbPages,
+      totalPages: result.nbPages,
       isBookmarked: bookmark ? bookmark[state.page] : false
     }))
   }
@@ -51,7 +50,7 @@ class App extends Component {
     const { page } = this.state;
     console.log("Current page", page);
     this.setState({ loading: true })
-    axios.get(`https://hn.algolia.com/api/v1/search?page=${page > 0 ? page : 0}`)
+    hackerNewsApi.getPageWiseData(page)
       .then((result) => {
         this.performUpdationOnStateAfterGettingData({ result });
       })
@@ -60,15 +59,15 @@ class App extends Component {
       })
   }
 
-  onUpVoteClickHandler = (e, objectID) => {
+  onUpVoteClickHandler = async (e, objectID) => {
     e.preventDefault();
-    let upVotes = JSON.parse(localStorage.getItem('upVotes'));
+    let upVotes = await hackerNewsApi.getDataFromStorageServices('upVotes')
     if (!upVotes) {
       upVotes = {};
     }
     let current_vote = upVotes[objectID] + 1 || 1;
     upVotes[objectID] = current_vote;
-    localStorage.setItem('upVotes', JSON.stringify(upVotes));
+    await hackerNewsApi.setDataToStorageService('upVotes', upVotes);
     let { hits } = this.state;
     let index = hits.findIndex(element => {
       return element.objectID === objectID;
@@ -81,7 +80,6 @@ class App extends Component {
       this.setState({ hits: hits });
     }
 
-    // this.setState({ ...this.state });
   }
 
   onNextButtonHandler = () => {
@@ -92,18 +90,18 @@ class App extends Component {
     this.setState((state) => ({ page: state.page - 1 }), () => this.getPageWiseData())
   }
 
-  onBookMarkButtonHandler = (isBookmark) => {
+  onBookMarkButtonHandler = async (isBookmark) => {
     const { page } = this.state
     this.setState({
       isBookmarked: isBookmark
     });
-    let bookmarkObj = JSON.parse(localStorage.getItem('bookmark'));
-    if(!bookmarkObj) {
+    let bookmarkObj = await hackerNewsApi.getDataFromStorageServices('bookmark')
+    if (!bookmarkObj) {
       bookmarkObj = {};
     }
     bookmarkObj[page] = isBookmark;
 
-    localStorage.setItem('bookmark', JSON.stringify(bookmarkObj));
+    await hackerNewsApi.setDataToStorageService('bookmark', bookmarkObj);
   }
 
   render() {
