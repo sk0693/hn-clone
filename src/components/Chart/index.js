@@ -11,13 +11,13 @@ import {
 
 const Chart = (props) => {
     return (
-        <div>
+        <>
             {!props.payload.loading &&
                 <LineChart LineChart
                     width={1024}
-                    height={250}
+                    height={350}
                     data={props.payload.hits}
-                    margin={{ top: 5, bottom: 5 }}
+                    margin={{ top: 20, bottom: 5 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="objectID" />
@@ -28,7 +28,7 @@ const Chart = (props) => {
                     {/* <Line type="monotone" dataKey="num_comments" stroke="#82ca9d" /> */}
                 </LineChart>
             }
-        </div>
+        </>
     )
 }
 

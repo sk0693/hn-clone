@@ -107,3 +107,8 @@
 .next:hover {
     text-decoration: underline;
 }
+
+.page-num {
+    float: right;
+    margin-right: 5px;
+}

@@ -29,8 +29,7 @@ class App extends Component {
       }))
     } else {
       this.setState((state) => ({
-        hits: [...result.data.hits],
-        page: state.page + 1,
+        hits: result.data.hits || [],
         loading: false
       }))
     }
@@ -38,6 +37,7 @@ class App extends Component {
 
   getPageWiseData() {
     const { page } = this.state;
+    console.log("Current page", page);
     this.setState({ loading: true })
     axios.get(`https://hn.algolia.com/api/v1/search?page=${page}`)
       .then((result) => {
@@ -48,13 +48,23 @@ class App extends Component {
       })
   }
 
+  onNextButtonHandler = () => {
+    this.setState((state) => ({ page: state.page + 1 }), () => this.getPageWiseData());
+  }
+
+  onPreviousButtonHandler = () => {
+    this.setState((state) => ({ page: state.page - 1 }), () => this.getPageWiseData())
+  }
+
   render() {
-    const { hits, loading } = this.state;
-    console.log("loading", loading, "hits", hits);
     return (
       <div>
         <div>
-          <Table payload={this.state} />
+          <Table
+            payload={this.state}
+            nextButton={this.onNextButtonHandler}
+            previousButton={this.onPreviousButtonHandler} />
+
           <Chart payload={this.state} />
         </div>
       </div>

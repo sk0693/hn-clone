@@ -77,7 +77,10 @@ const Table = (props) => {
                         <th>Comments</th>
                         <th>Vote Count</th>
                         <th>UpVote</th>
-                        <th>News Details</th>
+                        <th>
+                            News Details
+                            <span className="page-num">Page: {props.payload.page + 1}</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,9 +92,9 @@ const Table = (props) => {
                         <td></td>
                         <td></td>
                         <td className="paginateButtons">
-                            <span className="previous">Previous</span>
+                            <span className="previous" onClick={props.previousButton}>Previous</span>
                             <span> | </span>
-                            <span className="next">Next</span>
+                            <span className="next" onClick={props.nextButton}>Next</span>
                         </td>
                     </tr>
                 </tfoot>
