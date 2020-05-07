@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Table from './components/Table';
 import axios from 'axios';
 import './App.css';
+import Chart from './components/Chart';
 
 class App extends Component {
 
@@ -10,6 +11,7 @@ class App extends Component {
     this.state = {
       hits: [],
       page: 0,
+      loading: true,
       error: null
     }
   }
@@ -22,18 +24,21 @@ class App extends Component {
     if (error) {
       this.setState((state) => ({
         error: error,
-        hits: [...state.hits]
+        hits: [...state.hits],
+        loading: false
       }))
     } else {
       this.setState((state) => ({
         hits: [...result.data.hits],
-        page: state.page + 1
+        page: state.page + 1,
+        loading: false
       }))
     }
   }
 
   getPageWiseData() {
     const { page } = this.state;
+    this.setState({ loading: true })
     axios.get(`https://hn.algolia.com/api/v1/search?page=${page}`)
       .then((result) => {
         this.updateState({ result });
@@ -44,10 +49,15 @@ class App extends Component {
   }
 
   render() {
-    const { hits } = this.state;
-    console.log("hits", hits);
+    const { hits, loading } = this.state;
+    console.log("loading", loading, "hits", hits);
     return (
-      <Table news={hits} />
+      <div>
+        <div>
+          <Table payload={this.state} />
+          <Chart payload={this.state} />
+        </div>
+      </div>
     );
   }
 }
