@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles.css';
-import { FaBookmark, FaRegBookmark,  } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { BsTriangleFill } from "react-icons/bs";
 
 
@@ -42,14 +42,20 @@ const Table = (props) => {
             )
         }
         return payload.hits.map((news, index) => {
-            const { objectID, num_comments, points, title, url, author, created_at, voted = false } = news //destructuring
+            const { objectID, num_comments, points, title, url, author, created_at, voted = false } = news;
             return (
                 <tr key={objectID}>
                     <td>{num_comments}</td>
-                    <td className={(voted ? 'voted' : '')}>{points}</td>
+                    <td className={(voted ? 'voted' : '')}>
+                        {points}
+                    </td>
                     <td>
-                        {/* <div id="triangle"></div> */}
-                        <BsTriangleFill className={"triangle " + (voted ? 'voted' : '')}/>
+                        <a href={'/#'}>
+                            <BsTriangleFill
+                                className={"triangle"}
+                                onClick={(e) => props.upVoteButton(e, objectID)}
+                            />
+                        </a>
                     </td>
                     <td className="news-detail">
                         <span className="title">
@@ -88,9 +94,9 @@ const Table = (props) => {
                                 {props.payload.page + 1}
                                 {props.payload.isBookmarked
                                     ?
-                                    <FaBookmark className="bookmark" />
+                                    <FaBookmark className="bookmark" onClick={() =>props.bookMarkButton(false)}/>
                                     :
-                                    <FaRegBookmark className="bookmark" />
+                                    <FaRegBookmark className="bookmark" onClick={() =>props.bookMarkButton(true)} />
                                 }
                             </span>
                         </th>
@@ -105,9 +111,15 @@ const Table = (props) => {
                         <td></td>
                         <td></td>
                         <td className="paginateButtons">
-                            <span className="previous" onClick={props.previousButton}>Previous</span>
+                            <a href={'/#'}
+                                className={"previous " + (props.payload.page === 0 ? "isDisabled" : '')}
+                                onClick={props.previousButton}>Previous
+                            </a>
                             <span> | </span>
-                            <span className="next" onClick={props.nextButton}>Next</span>
+                            <a href={'/#'}
+                                className={"next " + (props.payload.page + 1 === props.payload.totalPages ? "isDisabled" : '')}
+                                onClick={props.nextButton}>Next
+                            </a>
                         </td>
                     </tr>
                 </tfoot>
