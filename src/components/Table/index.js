@@ -1,5 +1,8 @@
 import React from 'react'
 import './styles.css';
+import { FaBookmark, FaRegBookmark,  } from "react-icons/fa";
+import { BsTriangleFill } from "react-icons/bs";
+
 
 const Table = (props) => {
 
@@ -39,15 +42,16 @@ const Table = (props) => {
             )
         }
         return payload.hits.map((news, index) => {
-            const { objectID, num_comments, points, title, url, author, created_at } = news //destructuring
+            const { objectID, num_comments, points, title, url, author, created_at, voted = false } = news //destructuring
             return (
                 <tr key={objectID}>
                     <td>{num_comments}</td>
-                    <td>{points}</td>
+                    <td className={(voted ? 'voted' : '')}>{points}</td>
                     <td>
-                        <div id="triangle"></div>
+                        {/* <div id="triangle"></div> */}
+                        <BsTriangleFill className={"triangle " + (voted ? 'voted' : '')}/>
                     </td>
-                    <td>
+                    <td className="news-detail">
                         <span className="title">
                             {title}
                         </span>
@@ -79,7 +83,16 @@ const Table = (props) => {
                         <th>UpVote</th>
                         <th>
                             News Details
-                            <span className="page-num">Page: {props.payload.page + 1}</span>
+                            <span className="page-num">
+                                Page:
+                                {props.payload.page + 1}
+                                {props.payload.isBookmarked
+                                    ?
+                                    <FaBookmark className="bookmark" />
+                                    :
+                                    <FaRegBookmark className="bookmark" />
+                                }
+                            </span>
                         </th>
                     </tr>
                 </thead>

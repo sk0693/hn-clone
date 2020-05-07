@@ -46,18 +46,21 @@
     color: white;
 }
 
-#triangle {
-    width: 0;
-    height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-bottom: 12px solid lightgray;
-    margin-left: 35%;
+.news-detail {
+    line-height: 2em;
+}
+
+.triangle {
+    color: gray;
     cursor: pointer;
 }
 
-#triangle:hover {
-    border-bottom-color: #f46326;
+.triangle:hover {
+    color: #f46326;
+}
+
+.voted {
+    color: #f46326;
 }
 
 .site {
@@ -111,4 +114,9 @@
 .page-num {
     float: right;
     margin-right: 5px;
+}
+
+.bookmark {
+    margin-left: 5px;
+    cursor: pointer;
 }
