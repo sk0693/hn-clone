@@ -80,7 +80,7 @@ const Table = (props) => {
 
     return (
         <div>
-            <table id='news'>
+            <table className='news'>
                 <thead>
                     <tr>
                         <th>Comments</th>

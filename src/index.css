@@ -13,3 +13,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media only screen and (max-width:800px) {
+  /* For tablets: */
+  body {
+    width: 80%;
+    padding: 0;
+    /* overflow: hidden; */
+    overflow-x: hidden;
+  }
+}
+@media only screen and (max-width:500px) {
+  /* For mobile phones: */
+  body {
+    width: 90%;
+    overflow-x: hidden;
+  }
+}

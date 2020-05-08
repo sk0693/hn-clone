@@ -22,7 +22,7 @@ class App extends Component {
     this.getPageWiseData();
   }
 
-  async performUpdationOnStateAfterGettingData({ result = {}, error }){
+  async performUpdationOnStateAfterGettingData({ result = {}, error }) {
     let news = result.hits || [];
     let upVotes = await hackerNewsApi.getDataFromStorageServices('upVotes')
     const hidden = await hackerNewsApi.getDataFromStorageServices('hidden');
@@ -127,19 +127,17 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <Table
-            payload={this.state}
-            nextButton={this.onNextButtonHandler}
-            previousButton={this.onPreviousButtonHandler}
-            upVoteButton={this.onUpVoteClickHandler}
-            bookMarkButton={this.onBookMarkButtonHandler} 
-            onHideButton={this.onHideButtonHandler}/>
+      <>
+        <Table
+          payload={this.state}
+          nextButton={this.onNextButtonHandler}
+          previousButton={this.onPreviousButtonHandler}
+          upVoteButton={this.onUpVoteClickHandler}
+          bookMarkButton={this.onBookMarkButtonHandler}
+          onHideButton={this.onHideButtonHandler} />
 
-          <Chart payload={this.state} />
-        </div>
-      </div>
+        <Chart payload={this.state} />
+      </>
     );
   }
 }
