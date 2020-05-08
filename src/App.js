@@ -26,14 +26,14 @@ class App extends Component {
     let news = result.hits || [];
     let upVotes = await hackerNewsApi.getDataFromStorageServices('upVotes')
     const hidden = await hackerNewsApi.getDataFromStorageServices('hidden');
-    if (upVotes) {
-      news.forEach(ele => {
-        let votes = upVotes[ele['objectID']];
+    if (upVotes || hidden) {
+      news.forEach(element => {
+        let votes = upVotes ? upVotes[element['objectID']] : null;
         if (votes) {
-          ele['points'] = ele['points'] + votes;
-          ele['voted'] = true;
+          element['points'] = element['points'] + votes;
+          element['voted'] = true;
         }
-        ele['isHidden'] = hidden[ele['objectID']] || false;
+        element['isHidden'] = (hidden && hidden[element['objectID']]) || false;
       });
     }
 

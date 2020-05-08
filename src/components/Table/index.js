@@ -3,7 +3,6 @@ import './styles.css';
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { BsTriangleFill } from "react-icons/bs";
 
-
 const Table = (props) => {
 
     const todayDate = new Date();
@@ -50,7 +49,7 @@ const Table = (props) => {
                         {points}
                     </td>
                     <td>
-                        <a href={'/#'} className={(isHidden ? 'isDisabled': '')}>
+                        <a href={'/#'} className={(isHidden ? 'isDisabled' : '')}>
                             <BsTriangleFill
                                 className={"triangle"}
                                 onClick={(e) => props.upVoteButton(e, objectID)}
