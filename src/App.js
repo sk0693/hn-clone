@@ -22,7 +22,7 @@ class App extends Component {
     this.getPageWiseData();
   }
 
-  performUpdationOnStateAfterGettingData = async ({ result = {}, error }) => {
+  async performUpdationOnStateAfterGettingData({ result = {}, error }){
     let news = result.hits || [];
     let upVotes = await hackerNewsApi.getDataFromStorageServices('upVotes')
     const hidden = await hackerNewsApi.getDataFromStorageServices('hidden');

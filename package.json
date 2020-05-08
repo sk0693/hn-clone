@@ -15,10 +15,15 @@
     "styled-components": "^5.1.0"
   },
   "scripts": {
+    "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
+    "dev:start": "nodemon ./server-build/index.js",
+    "server": "nodemon ./server/index.js",
+    "dev": "npm-run-all --parallel build dev:*",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "open": "npm-run-all build dev:build-server dev:start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,5 +39,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "nodemon": "^2.0.3",
+    "npm-run-all": "^4.1.5",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   }
 }

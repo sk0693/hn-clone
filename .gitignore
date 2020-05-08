@@ -27,3 +27,5 @@ firebase-debug
 firebase*
 .firebase
 .firebaserc
+
+/server-build
