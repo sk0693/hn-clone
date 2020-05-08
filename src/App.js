@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hits: [],
+      hits: props.hits ? props.hits : [],
       page: 0,
       loading: true,
       error: null,
