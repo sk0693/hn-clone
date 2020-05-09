@@ -8,7 +8,7 @@ const ReactDOMServer = require('react-dom/server');
 
 const App = require('../src/App');
 
-const PORT = process.env.PORT || 8282;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 app.use(express.static('./build'));
