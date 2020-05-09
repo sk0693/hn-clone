@@ -24,8 +24,9 @@ yarn-error.log*
 
 firebase-debug
 
-firebase*
 .firebase
-.firebaserc
 
 /server-build
+
+/__snapshots__
+*.snap
