@@ -23,9 +23,11 @@
     "dev:start": "nodemon ./server-build/index.js",
     "server": "nodemon ./server/index.js ",
     "dev": "npm-run-all --parallel build dev:*",
-    "firebase:build": "firebase deploy",
-    "firebase": "npm-run-all build firebase:build",
-    "both": "npm-run-all --parallel start server"
+    "both": "npm-run-all --parallel start server",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "firebase:deploy": "firebase deploy",
+    "firebase": "npm-run-all build firebase:deploy"
   },
   "jest": {
     "snapshotSerializers": [

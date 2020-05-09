@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
-import App from '../src/App'
 import { configure } from 'enzyme';
+import toJson from 'enzyme-to-json'
 import Adapter from 'enzyme-adapter-react-16';
+import App from '../src/App'
 
 configure({ adapter: new Adapter() });
 
