@@ -10,6 +10,8 @@ import {
     ResponsiveContainer
 } from "recharts";
 
+import './style.css';
+
 const Chart = (props) => {
 
     // const AxisLabel = ({ axisType, x, y, width, height, stroke, children }) => {
@@ -25,7 +27,7 @@ const Chart = (props) => {
     // };
 
     return (
-        <>
+        <div className="chart">
             {!props.payload.loading &&
                 <ResponsiveContainer width='95%' height={500}>
                     <LineChart LineChart
@@ -43,7 +45,7 @@ const Chart = (props) => {
                     </LineChart>
                 </ResponsiveContainer>
             }
-        </>
+        </div>
     )
 }
 

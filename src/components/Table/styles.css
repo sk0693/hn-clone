@@ -4,12 +4,14 @@
 }
 
 .news {
-    /* text-align: center; */
     font-family: arial, sans-serif;
     border-collapse: collapse;
     border: 3px solid #ddd;
     width: 100%;
     font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
 }
 
 .news td {
@@ -132,4 +134,24 @@
 
 .hidden {
     background-color: #8e89d9 !important;
+}
+
+@media only screen and (max-width:800px) {
+
+    /* For tablets: */
+    .news {
+        width: 80%;
+        padding: 0;
+        /* overflow: hidden; */
+        overflow-x: hidden;
+    }
+}
+
+@media only screen and (max-width:500px) {
+
+    /* For mobile phones: */
+    .news {
+        width: 90%;
+        overflow-x: hidden;
+    }
 }
