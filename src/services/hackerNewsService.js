@@ -2,6 +2,7 @@ import BaseApiService from './BaseApiService';
 
 const BASE_URL = 'https://hn.algolia.com/api/v1';
 const client = new BaseApiService({ baseURL: BASE_URL });
+const client2 = new BaseApiService({});
 
 const hackerNewsApi = {};
 
@@ -28,5 +29,10 @@ hackerNewsApi.setDataToStorageService = (key, data) => {
         resolve('done');
     })
 }
+
+
+hackerNewsApi.getHello = (page = 0) => {
+    return client2.get(`/hello`);
+};
 
 export default hackerNewsApi;

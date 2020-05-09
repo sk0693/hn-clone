@@ -8,15 +8,13 @@ const ReactDOMServer = require('react-dom/server');
 
 const App = require('../src/App');
 
-const PORT = process.env.PORT || 3006;
+const PORT = process.env.PORT || 8282;
 const app = express();
 
 app.use(express.static('./build'));
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     const app = ReactDOMServer.renderToString(<App />);
-
-    console.log("jjjjjjjjjjjjjj")
 
     const indexFile = path.resolve('./build/index.html');
     fs.readFile(indexFile, 'utf8', (err, data) => {
@@ -30,6 +28,10 @@ app.get('*', (req, res) => {
         );
     });
 });
+
+app.get('/hello', (req, res) => {
+    res.send({data: 'data'})
+})
 
 app.listen(PORT, () => {
     console.log(`😎 Server is listening on port ${PORT}`);
