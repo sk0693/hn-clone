@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+
+  hacker-news-client:
+    container_name: hacker-news-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    environment:
+      - SERVICE_NAME=hn-clone
+      - NODE_ENV=development
+    restart: always
+    stdin_open: true
