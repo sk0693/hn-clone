@@ -169,7 +169,7 @@ The output of this test case would be.
   </a>
 </p>
 
-## Authors
+## Author
 
 * **Sourabh Khurana** 
 
